@@ -13,7 +13,7 @@ const Header = () => {
             </Link>
           </div>
           <div className="header__button">
-            <i className="fas fa-user-circle"></i>
+             <i class="fas fa-utensils"></i>
           </div>
         </div>
       </div>

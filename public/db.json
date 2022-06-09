@@ -1,0 +1,7 @@
+{
+  "foods": [
+    { "name": "bildircin", "price": 11 },
+    { "name": "bildircin2", "price": 11 },
+    { "name": "bildircin3", "price": 11 }
+  ]
+}

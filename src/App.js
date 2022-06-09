@@ -23,8 +23,8 @@ function App(props) {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/courier-order" element={<Page1 />} />
-          <Route path="/ordinary-order" element={<Page2 />} />
+          <Route path="/page1" element={<Page1 />} />
+          <Route path="/page2" element={<Page2 />} />
         </Routes>
       </BrowserRouter>
     </div>
