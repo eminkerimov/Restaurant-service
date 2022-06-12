@@ -5,6 +5,7 @@ import Main from "./pages/Main/Main";
 import Page1 from "./pages/Page1/Page1";
 import Page2 from "./pages/Page2/Page2";
 import { SET_VALUE } from "./store/actions/actionTypes";
+
 function App(props) {
   return (
     <div className="App">

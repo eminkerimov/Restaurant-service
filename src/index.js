@@ -22,6 +22,7 @@ if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
 else store = createStore(rootReducer, applyMiddleware(thunk));
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <Provider store={store}>
     <App />

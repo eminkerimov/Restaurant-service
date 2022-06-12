@@ -3,7 +3,6 @@ import { SET_VALUE } from '../actions/actionTypes';
 const initialState = {
   value: '',
   foods: [],
-  
 };
 
 const setBlock = (state, action) => {

@@ -1,15 +1,12 @@
-import { LocalStorageAuthUtil } from './utils';
-import iaxios from './../../iaxios';
 
 import { SET_VALUE } from './actionTypes';
+import axios from 'axios';
 
-// get instance of LocalStorageAuthUtil to using for storage operations
-const ls = new LocalStorageAuthUtil();
 
 export function getBlock(blockId) {
   return (dispatch) => {
     dispatch({ type: SET_LOADER, payload: true });
-    iaxios
+    axios
       .get(`/api/get_block?id=${blockId}`)
       .then((response) => {
         const data = response.data;
@@ -20,7 +17,6 @@ export function getBlock(blockId) {
         dispatch({ type: SET_LOADER, payload: false });
       })
       .catch((err) => {
-        //dispatch({ type: SET_AUTH_ERROR, payload: true });
         dispatch({ type: SET_LOADER, payload: false });
       });
   };
