@@ -2,9 +2,9 @@ import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Main from "./pages/Main/Main";
-import Page1 from "./pages/Page1/Page1";
-import Page2 from "./pages/Page2/Page2";
+import AllOrders from "./pages/AllOrders/AllOrders";
 import { SET_VALUE } from "./store/actions/actionTypes";
+import CreateOrder from "./pages/CreateOrder/CreateOrder";
 
 function App(props) {
   return (
@@ -24,8 +24,8 @@ function App(props) {
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
-          <Route path="/page1" element={<Page1 />} />
-          <Route path="/page2" element={<Page2 />} />
+          <Route path="/all-orders" element={<AllOrders />} />
+          <Route path="/create-order" element={<CreateOrder />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -34,7 +34,7 @@ const Main = () => {
       <h2>TOTAL ORDERS : 150</h2>
       <h2>TOTAL SUM : 2500</h2>
       <div className="pages">
-        <Link to="/page1">
+        <Link to="/all-orders">
           <div className="pages__card">
             <h2>ALL ORDERS</h2>
             <div style={{ color: "blue", fontSize: "55px", padding: "50px" }}>
@@ -42,7 +42,7 @@ const Main = () => {
                         </div>
           </div>
         </Link>
-        <Link to="/page2">
+        <Link to="/create-order">
           <div className="pages__card">
             <h2>ADD NEW ORDER</h2>
             <div style={{ color: "blue", fontSize: "55px", padding: "50px" }}>

@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Page2() {
+export default function CreateOrder() {
   return (
-    <div>
-        Page2
+    <div className='container'>
+        Create Order
         <h1>ofisiant:</h1>
         <select name="2" id="">
             <option value="1">1</option>
