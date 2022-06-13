@@ -1,7 +1,82 @@
 {
-  "foods": [
-    { "name": "bildircin", "price": 11 },
-    { "name": "bildircin2", "price": 11 },
-    { "name": "bildircin3", "price": 11 }
+  "orders": [
+{
+    "masa": "m5",
+    "servant": "emin",
+    "status": "Ləğv edilən",
+    "amount": 25,
+    "endDate": "01.06.2022"
+  },
+  {
+    "masa": "m9",
+    "servant": "emin",
+    "status": "Sonlanan",
+    "amount": 84,
+    "endDate": "09.06.2022"
+  },
+  {
+    "masa": "m5",
+    "servant": "anar",
+    "status": "Sonlanmayan",
+    "amount": 45,
+    "endDate": "04.06.2022"
+  },
+  {
+    "masa": "m5",
+    "servant": "emin",
+    "status": "Sonlanan",
+    "amount": 6,
+    "endDate": "11.06.2022"
+  },
+  {
+    "masa": "m5",
+    "servant": "emin",
+    "status": "Sonlanmayan",
+    "amount": 25,
+    "endDate": "12.06.2022"
+  },
+  {
+    "masa": "m5",
+    "servant": "emin",
+    "status": "Ləğv edilən",
+    "amount": 5,
+    "endDate": "10.06.2022"
+  },
+  {
+    "masa": "m5",
+    "servant": "emin",
+    "status": "Sonlanmayan",
+    "amount": 24,
+    "endDate": "01.06.2022"
+  },
+  {
+    "masa": "m5",
+    "servant": "emin",
+    "status": "Sonlanmayan",
+    "amount": 8,
+    "endDate": "08.06.2022"
+  }
+  ],
+  "menu" : [
+    {
+      "item" : "Dönər",
+      "price" : 2
+    },
+    {
+      "item" : "Plov",
+      "price" : 5
+    },
+    {
+      "item" : "Su",
+      "price" : 1
+    },
+    {
+      "item" : "Lahmacun",
+      "price" : 2.5
+    },
+    {
+      "item" : "Mərci",
+      "price" : 1.5
+    }
   ]
 }

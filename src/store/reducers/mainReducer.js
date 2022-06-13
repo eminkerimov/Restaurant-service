@@ -1,8 +1,8 @@
 import { SET_VALUE } from '../actions/actionTypes';
 
 const initialState = {
-  value: '',
-  foods: [],
+  menu: [],
+  orders: []
 };
 
 const setBlock = (state, action) => {

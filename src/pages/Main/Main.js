@@ -3,12 +3,6 @@ import { Link } from "react-router-dom";
 import "./Main.scss";
 
 const Main = () => {
-  const post = () => {
-    fetch("http://localhost:3000/db.json");
-  };
-  React.useEffect(() => {
-    post();
-  }, []);
   return (
     <div className="container">
       <h1>ABOUT</h1>
@@ -38,8 +32,8 @@ const Main = () => {
           <div className="pages__card">
             <h2>ALL ORDERS</h2>
             <div style={{ color: "blue", fontSize: "55px", padding: "50px" }}>
-            <i class="fa-solid fa-rectangle-list"></i>
-                        </div>
+              <i class="fas fa-utensils"></i>
+            </div>
           </div>
         </Link>
         <Link to="/create-order">

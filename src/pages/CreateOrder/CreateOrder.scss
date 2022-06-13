@@ -1,0 +1,11 @@
+.MuiBox-root {
+    display: flex;
+    justify-content: space-evenly;
+    .MuiFormControl-root {
+        width: 45%;
+    }
+}
+
+.MuiButton-contained {
+    margin-top: 20px !important;
+}

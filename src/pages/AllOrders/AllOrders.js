@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -11,65 +11,8 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { Button } from "@mui/material";
+import axios from "axios";
 
-const rows = [
-  {
-    masa: "m5",
-    servant: "emin",
-    status: "Ləğv edilən",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-  {
-    masa: "m9",
-    servant: "emin",
-    status: "Sonlanan",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-  {
-    masa: "m5",
-    servant: "anar",
-    status: "Sonlanmayan",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-  {
-    masa: "m5",
-    servant: "emin",
-    status: "Sonlanan",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-  {
-    masa: "m5",
-    servant: "emin",
-    status: "Sonlanmayan",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-  {
-    masa: "m5",
-    servant: "emin",
-    status: "Ləğv edilən",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-  {
-    masa: "m5",
-    servant: "emin",
-    status: "Sonlanmayan",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-  {
-    masa: "m5",
-    servant: "emin",
-    status: "Sonlanmayan",
-    amount: 25,
-    endDate: "23.23.2022",
-  },
-];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -161,10 +104,30 @@ function EnhancedTableHead(props) {
 }
 
 export default function AllOrders() {
-  const [order, setOrder] = React.useState("desc");
-  const [orderBy, setOrderBy] = React.useState("status");
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [order, setOrder] = useState("desc");
+  const [orderBy, setOrderBy] = useState("status");
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [allOrders, setAllOrders] = useState([])
+
+  const getAllOrders = () => {
+    axios.get("http://localhost:3001/db.json")
+  .then(function (response) {
+    if (response.status === 200)
+    console.log(response.data);
+    setAllOrders(response.data.orders)
+
+  })
+  .catch(function (error) {
+    // handle error
+    console.log(error);
+  })
+  };
+
+
+  useEffect(() => {
+    getAllOrders();
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -197,7 +160,7 @@ export default function AllOrders() {
                 onRequestSort={handleRequestSort}
               />
               <TableBody>
-                {stableSort(rows, getComparator(order, orderBy))
+                {stableSort(allOrders, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     return (
@@ -224,7 +187,7 @@ export default function AllOrders() {
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={rows.length}
+            count={allOrders.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

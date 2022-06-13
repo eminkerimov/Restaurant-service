@@ -12,9 +12,6 @@ const Header = () => {
               <i className="fa-solid fa-house"></i>
             </Link>
           </div>
-          <div className="header__button">
-             <i class="fas fa-utensils"></i>
-          </div>
         </div>
       </div>
     </div>
