@@ -1,82 +1,82 @@
 {
   "orders": [
-{
-    "masa": "m5",
-    "servant": "emin",
-    "status": "Ləğv edilən",
-    "amount": 25,
-    "endDate": "01.06.2022"
-  },
-  {
-    "masa": "m9",
-    "servant": "emin",
-    "status": "Sonlanan",
-    "amount": 84,
-    "endDate": "09.06.2022"
-  },
-  {
-    "masa": "m5",
-    "servant": "anar",
-    "status": "Sonlanmayan",
-    "amount": 45,
-    "endDate": "04.06.2022"
-  },
-  {
-    "masa": "m5",
-    "servant": "emin",
-    "status": "Sonlanan",
-    "amount": 6,
-    "endDate": "11.06.2022"
-  },
-  {
-    "masa": "m5",
-    "servant": "emin",
-    "status": "Sonlanmayan",
-    "amount": 25,
-    "endDate": "12.06.2022"
-  },
-  {
-    "masa": "m5",
-    "servant": "emin",
-    "status": "Ləğv edilən",
-    "amount": 5,
-    "endDate": "10.06.2022"
-  },
-  {
-    "masa": "m5",
-    "servant": "emin",
-    "status": "Sonlanmayan",
-    "amount": 24,
-    "endDate": "01.06.2022"
-  },
-  {
-    "masa": "m5",
-    "servant": "emin",
-    "status": "Sonlanmayan",
-    "amount": 8,
-    "endDate": "08.06.2022"
-  }
+    {
+      "masa": "m5",
+      "servant": "Anar",
+      "status": "Ləğv edilən",
+      "amount": 25,
+      "endDate": "01.06.2022"
+    },
+    {
+      "masa": "m0",
+      "servant": "Anar",
+      "status": "Sonlanan",
+      "amount": 84,
+      "endDate": "09.06.2022"
+    },
+    {
+      "masa": "m7",
+      "servant": "Namiq",
+      "status": "Sonlanmayan",
+      "amount": 45,
+      "endDate": "04.06.2022"
+    },
+    {
+      "masa": "m8",
+      "servant": "Azad",
+      "status": "Sonlanan",
+      "amount": 6,
+      "endDate": "11.06.2022"
+    },
+    {
+      "masa": "m3",
+      "servant": "Namiq",
+      "status": "Sonlanmayan",
+      "amount": 25,
+      "endDate": "12.06.2022"
+    },
+    {
+      "masa": "n8",
+      "servant": "Anar",
+      "status": "Ləğv edilən",
+      "amount": 5,
+      "endDate": "10.06.2022"
+    },
+    {
+      "masa": "a9",
+      "servant": "Azad",
+      "status": "Sonlanmayan",
+      "amount": 24,
+      "endDate": "01.06.2022"
+    },
+    {
+      "masa": "c2",
+      "servant": "Anar",
+      "status": "Sonlanmayan",
+      "amount": 8,
+      "endDate": "08.06.2022"
+    }
   ],
-  "menu" : [
+  "menu": [
     {
-      "item" : "Dönər",
-      "price" : 2
+      "item": "Dönər",
+      "price": 2
     },
     {
-      "item" : "Plov",
-      "price" : 5
+      "item": "Plov",
+      "price": 5
     },
     {
-      "item" : "Su",
-      "price" : 1
+      "item": "Su",
+      "price": 1
     },
     {
-      "item" : "Lahmacun",
-      "price" : 2.5
+      "item": "Lahmacun",
+      "price": 2.5
     },
     {
-      "item" : "Mərci",
-      "price" : 1.5
+      "item": "Mərci",
+      "price": 1.5
     }
   ]
 }

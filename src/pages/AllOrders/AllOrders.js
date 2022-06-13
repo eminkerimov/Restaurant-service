@@ -43,7 +43,6 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: "order", label: "Sıra sayı" },
   {
     id: "masa",
     label: "Masa",
@@ -76,6 +75,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
+      <TableCell>S/S</TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -111,19 +111,17 @@ export default function AllOrders() {
   const [allOrders, setAllOrders] = useState([])
 
   const getAllOrders = () => {
-    axios.get("http://localhost:3001/db.json")
+    axios.get("http://localhost:3000/db.json")
   .then(function (response) {
     if (response.status === 200)
     console.log(response.data);
     setAllOrders(response.data.orders)
-
   })
   .catch(function (error) {
     // handle error
     console.log(error);
   })
   };
-
 
   useEffect(() => {
     getAllOrders();
@@ -165,8 +163,8 @@ export default function AllOrders() {
                   .map((row, index) => {
                     return (
                       <TableRow>
-                        <TableCell id={index} align="right">
-                          №
+                        <TableCell id={index}>
+                          {page * rowsPerPage + index + 1}
                         </TableCell>
                         <TableCell align="right">{row.masa}</TableCell>
                         <TableCell align="right">{row.servant}</TableCell>
@@ -183,6 +181,7 @@ export default function AllOrders() {
                   })}
               </TableBody>
             </Table>
+            <p>Cəm Məbləğ : ???</p>
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
