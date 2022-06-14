@@ -1,31 +1,29 @@
+import React from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
 import Main from "./pages/Main/Main";
 import AllOrders from "./pages/AllOrders/AllOrders";
-import { SET_VALUE } from "./store/actions/actionTypes";
 import CreateOrder from "./pages/CreateOrder/CreateOrder";
+import OrderDetails from "./pages/OrderDetails/OrderDetails";
+import { getBlock } from "./store/actions/mainActions";
 
 function App(props) {
+  React.useEffect(() => {
+    props.getDataHandle();
+  }, []);
+
+  console.log(props.state);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <p>{props.value}</p>
-        <input
-          value={props.value}
-          onChange={(e) => {
-            let target = e.target.value;
-            props.changeValue(target);
-          }}
-        />
-        <p>EMIN</p>
-      </header>
       <BrowserRouter>
         <Header />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/all-orders" element={<AllOrders />} />
           <Route path="/create-order" element={<CreateOrder />} />
+          <Route path="/order-details/:id" element={<OrderDetails />} />
         </Routes>
       </BrowserRouter>
     </div>
@@ -35,12 +33,13 @@ function App(props) {
 function mapStateToProps(state) {
   return {
     value: state.main.value,
+    state: state.main,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    changeValue: (val) => dispatch({ type: SET_VALUE, payload: val }),
+    getDataHandle: () => dispatch(getBlock()),
   };
 }
 

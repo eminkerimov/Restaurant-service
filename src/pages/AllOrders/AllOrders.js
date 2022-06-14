@@ -11,8 +11,9 @@ import TableSortLabel from "@mui/material/TableSortLabel";
 import Paper from "@mui/material/Paper";
 import { visuallyHidden } from "@mui/utils";
 import { Button } from "@mui/material";
+import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { connect } from "react-redux";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -75,7 +76,7 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-      <TableCell>S/S</TableCell>
+        <TableCell>S/S</TableCell>
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -103,29 +104,11 @@ function EnhancedTableHead(props) {
   );
 }
 
-export default function AllOrders() {
+function AllOrders(props) {
   const [order, setOrder] = useState("desc");
   const [orderBy, setOrderBy] = useState("status");
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const [allOrders, setAllOrders] = useState([])
-
-  const getAllOrders = () => {
-    axios.get("http://localhost:3000/db.json")
-  .then(function (response) {
-    if (response.status === 200)
-    console.log(response.data);
-    setAllOrders(response.data.orders)
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  };
-
-  useEffect(() => {
-    getAllOrders();
-  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
@@ -158,12 +141,12 @@ export default function AllOrders() {
                 onRequestSort={handleRequestSort}
               />
               <TableBody>
-                {stableSort(allOrders, getComparator(order, orderBy))
+                {stableSort(props.orders, getComparator(order, orderBy))
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
                     return (
                       <TableRow>
-                        <TableCell id={index}>
+                        <TableCell id={row.id}>
                           {page * rowsPerPage + index + 1}
                         </TableCell>
                         <TableCell align="right">{row.masa}</TableCell>
@@ -172,21 +155,22 @@ export default function AllOrders() {
                         <TableCell align="right">{row.amount}</TableCell>
                         <TableCell align="right">{row.endDate}</TableCell>
                         <TableCell>
-                          <Button variant="contained" color="primary">
-                            BAX
-                          </Button>
+                          <Link to={`/order-details/${row.id}`}>
+                            
+                            <Button variant="contained">Bax</Button>
+                            </Link>
                         </TableCell>
                       </TableRow>
                     );
                   })}
               </TableBody>
             </Table>
-            <p>Cəm Məbləğ : ???</p>
+            <p>Cəm Məbləğ : {props.ordersSum} AZN</p>
           </TableContainer>
           <TablePagination
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
-            count={allOrders.length}
+            count={props.orders.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -197,3 +181,12 @@ export default function AllOrders() {
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    orders: state.main.orders,
+    ordersSum: state.main.ordersSum,
+  };
+}
+
+export default connect(mapStateToProps, null)(AllOrders);

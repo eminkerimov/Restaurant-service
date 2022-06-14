@@ -10,14 +10,14 @@
     }
 }
 .newOrder {
-    display:  flex;
+    display: flex;
     justify-content: space-between;
     &__table {
         width: 68%;
         &__success {
             color: #fff;
             background-color: green;
-             border-radius: 3px;
+            border-radius: 3px;
             padding: 4px;
         }
         svg {

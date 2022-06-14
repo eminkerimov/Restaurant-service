@@ -1,81 +1,129 @@
-import { Button, FormControl, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from '@mui/material'
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { DeleteIcon } from '../../assets/Icons';
-import "./CreateOrder.scss"
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+} from "@mui/material";
+import { Link } from "react-router-dom";
 
-export default function CreateOrder() {
-  const [orderStarted, setOrderStarted] = useState(false)
-  const [servant, setServant] = useState('');
-  const [masa, setMasa] = useState('');
-  const [item, setItem] = useState('');
+import React, { useState } from "react";
+import {
+  SET_SERVANT,
+  SET_TABLE,
+  SET_FOOD,
+  SET_FOOD_COUNT,
+  SET_INITIAL,
+  SET_ROW,
+} from "../../store/actions/actionTypes";
+
+import { connect } from "react-redux";
+
+import { DeleteIcon } from "../../assets/Icons";
+import "./CreateOrder.scss";
+
+function CreateOrder(props) {
+  const [orderStarted, setOrderStarted] = useState(false);
   const [rows, setRows] = useState([]);
-  const [count, setCount] = useState(0);
-  const [allItems, setAllItems] = useState([])
-  const [price, setPrice] = useState('')
-
-  const getAllItems = () => {
-    axios.get("http://localhost:3000/db.json")
-  .then(function (response) {
-    if (response.status === 200)
-    setAllItems(response.data.menu)
-  })
-  .catch(function (error) {
-    // handle error
-    console.log(error);
-  })
-  };
-
-  useEffect(() => {
-    getAllItems();
-  }, []);
-
-  // useEffect(() => {
-  //   const getItemObj = allItems?.find(o => o.item === item);
-  //   setPrice(getItemObj.price)
-  // }, [allItems, item])
 
   const handleChangeServant = (event) => {
-    setServant(event.target.value);
+    const target = event.target.value;
+    props.servantSelectHandle(target);
   };
 
-  const handleChangeMasa = (event) => {
-    setMasa(event.target.value);
+  const handleChangeTable = (event) => {
+    const target = event.target.value;
+    props.tableSelectHandle(target);
   };
 
-  const handleChangeItem = (event) => {
-    setItem(event.target.value);
+  const handleChangeItem = (e) => {
+    props.foodSelectHandle(e.target.value);
   };
 
-  const handleChangeCount = (event) => {
-    setCount(event.target.value);
+  const handleChangeCount = (e) => {
+    props.foodCountHandle(Number(e.target.value));
   };
 
   var today = new Date();
-  var dateTime = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
   const handleAddItem = () => {
     const order = rows.length + 1;
-    let newItem = {order, masa, servant, item, count, dateTime };
-    setRows([...rows, newItem])
-  }
+    let newItem = {
+      order,
+      masa: props.selectedTable,
+      servant: props.selectedServant,
+      name: props.selectedFood.name,
+      amount: props.foodCount,
+      date: dateTime,
+      price: props.selectedFood.price,
+    };
+    setRows([...rows, newItem]);
+  };
+
+  const handleDelete = (id) => {
+    setRows((prev) => {
+      return prev.filter((item, index) => index !== id);
+    });
+  };
+
+  const rowsSum = React.useMemo(() => {
+    let total = 0;
+    let rowTotal = 0;
+
+    if (rows) {
+      rows?.forEach((item) => {
+        rowTotal = +item.amount * +item.price;
+        total += +item.amount * +item.price;
+      });
+    }
+    return { rowTotal, total };
+  }, [rows]);
+
+  const addRowInTable = () => {
+    const newId = props.orders[props.orders.length - 1].id + 1;
+    const newAmount = rows.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.amount * currentValue.price;
+    }, 0);
+    const newRow = {
+      id: newId,
+      masa: props.selectedTable,
+      servant: props.selectedServant,
+      status: "Sonlanmayan",
+      foods: rows,
+      endDate: "04.06.2022",
+      amount: newAmount,
+    };
+    props.setRowHandle(newRow);
+    props.setInitialState();
+  };
+
+  console.log(rows);
 
   return (
     <div className="container">
-
-      {!orderStarted &&
-        <div className='createOrder'>
+      {!orderStarted && (
+        <div className="createOrder">
           <h2>Yeni Sifariş</h2>
           <FormControl>
             <InputLabel id="demo-simple-select-label">Ofisiant</InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={servant}
+              value={props.selectedServant}
               label="Ofisiant"
               onChange={handleChangeServant}
             >
-              <MenuItem value={"Azer"}>Azer</MenuItem>
+              <MenuItem value={"Rasul"}>Rasul</MenuItem>
               <MenuItem value={"Emin"}>Emin</MenuItem>
               <MenuItem value={"Namiq"}>Namiq</MenuItem>
             </Select>
@@ -85,9 +133,9 @@ export default function CreateOrder() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={masa}
+              value={props.selectedTable}
               label="Masa"
-              onChange={handleChangeMasa}
+              onChange={handleChangeTable}
             >
               <MenuItem value={"A1"}>A1</MenuItem>
               <MenuItem value={"B1"}>B1</MenuItem>
@@ -98,16 +146,19 @@ export default function CreateOrder() {
             variant="contained"
             color="primary"
             onClick={() => setOrderStarted(true)}
-            disabled={(servant === "") || (masa === "")}
+            disabled={
+              props.selectedServant === "" || props.selectedTable === ""
+            }
           >
             Sifarişi Başlat
           </Button>
-        </div>}
-      {orderStarted &&
+        </div>
+      )}
+      {orderStarted && (
         <div className="newOrder">
           <div className="newOrder__table">
-            <h2>Masa : {masa}</h2>
-            <h2>Ofisiant : {servant}</h2>
+            <h2>Masa: {props.selectedTable}</h2>
+            <h2>Ofisiant : {props.selectedServant}</h2>
             <TableContainer component={Paper}>
               <Table aria-label="simple table">
                 <TableHead>
@@ -126,32 +177,44 @@ export default function CreateOrder() {
                   {rows?.map((row, index) => (
                     <TableRow
                       key={index}
-                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     >
-                      <TableCell component="th" scope="row"> {row.order}</TableCell>
-                      <TableCell align="right">{row?.item}</TableCell>
-                      <TableCell align="right">{row?.count}</TableCell>
-                      <TableCell align="right">?</TableCell>
-                      <TableCell align="right">{row?.dateTime}</TableCell>
+                      <TableCell component="th" scope="row">
+                        {row.order}
+                      </TableCell>
+                      <TableCell align="right">{row?.name}</TableCell>
+                      <TableCell align="right">{row?.amount}</TableCell>
+                      <TableCell align="right">
+                        {row.amount * row.price}
+                      </TableCell>
+                      <TableCell align="right">{row?.date}</TableCell>
                       <TableCell align="right">0</TableCell>
                       <TableCell align="right">
-                        <span className="newOrder__table__success">Verildi</span>
+                        <span className="newOrder__table__success">
+                          Verildi
+                        </span>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell
+                        onClick={() => handleDelete(index)}
+                        align="right"
+                      >
                         {DeleteIcon}
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-              <p>Cəm Məbləğ : {}</p>
-              <Button
-            variant="contained"
-            color="error"
-            disabled={!rows.length}
-          >
-            Sifarişi Sonlandır
-          </Button>
+              <p>Cəm Məbləğ : {rowsSum.total} AZN</p>
+              <Link to={!rows.length ? "#" : "/"}>
+                <Button
+                  onClick={addRowInTable}
+                  variant="contained"
+                  color="error"
+                  disabled={!rows.length}
+                >
+                  Sifarişi Sonlandır
+                </Button>
+              </Link>
             </TableContainer>
           </div>
           <div className="newOrder__modal">
@@ -161,49 +224,63 @@ export default function CreateOrder() {
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={item}
+                value={props.selectedFood}
                 label="Menu"
-                onChange={handleChangeItem}
+                onChange={(e) => handleChangeItem(e)}
               >
-                {allItems?.map((items, index)=>(
-                <MenuItem key={index} value={items.item}>{items.item}</MenuItem>
+                {props.menu?.map((food, index) => (
+                  <MenuItem key={index} value={food}>
+                    {food.name}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
             <TextField
               InputProps={{
-                min: 0
+                min: 0,
               }}
               id="outlined-number"
               label="Say"
               type="number"
-              value={count}
+              value={props.foodCount}
               onChange={handleChangeCount}
             />
-            <TextField
-              id="standard-read-only-input"
-              label="Qiymət"
-              value={price}
-               InputProps={{
-                readOnly: true,
-              }}
-              variant="standard"
-
-            />
+            <p>Qiymət : {props.selectedFood?.price || 0} AZN</p>
             <Button
               variant="contained"
               color="success"
               onClick={handleAddItem}
-              disabled={
-                (count <=0) || item === ""
-              }
-              >
+              disabled={props.foodCount <= 0 || !props.selectedFood}
+            >
               Əlavə et
             </Button>
           </div>
         </div>
-      }
-
+      )}
     </div>
   );
 }
+
+function mapStateToProps(state) {
+  return {
+    menu: state.main.menu,
+    selectedServant: state.main.selectedServant,
+    selectedTable: state.main.selectedTable,
+    selectedFood: state.main.selectedFood,
+    foodCount: state.main.foodCount,
+    orders: state.main.orders,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    servantSelectHandle: (val) => dispatch({ type: SET_SERVANT, payload: val }),
+    tableSelectHandle: (val) => dispatch({ type: SET_TABLE, payload: val }),
+    foodSelectHandle: (val) => dispatch({ type: SET_FOOD, payload: val }),
+    foodCountHandle: (val) => dispatch({ type: SET_FOOD_COUNT, payload: val }),
+    setInitialState: () => dispatch({ type: SET_INITIAL }),
+    setRowHandle: (val) => dispatch({ type: SET_ROW, payload: val }),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateOrder);

@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./Main.scss";
+import { connect } from "react-redux";
 
-const Main = () => {
+const Main = (props) => {
   return (
-    <div className="container">
+    <div className="container main">
       <h1>ABOUT</h1>
       <p>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia dolores
@@ -25,14 +26,14 @@ const Main = () => {
         velit, non officiis adipisci mollitia tempore vero? Aliquam, voluptatum?
         Voluptatem, non necessitatibus.
       </p>
-      <h2>Bütün Sifarişlər : ?</h2>
-      <h2>Ümumi məbləğ : ?</h2>
+      <h2>Bütün Sifarişlər : {props.ordersCount}</h2>
+      <h2>Ümumi məbləğ : {props.ordersSum}</h2>
       <div className="pages">
         <Link to="/all-orders">
           <div className="pages__card">
             <h3>Bütün Sifarişlər</h3>
             <div className="pages__card__link">
-              <i class="fas fa-utensils"></i>
+              <i className="fas fa-utensils"></i>
             </div>
           </div>
         </Link>
@@ -49,4 +50,11 @@ const Main = () => {
   );
 };
 
-export default Main;
+function mapStateToProps(state) {
+  return {
+    ordersSum: state.main.ordersSum,
+    ordersCount: state.main.ordersCount,
+  };
+}
+
+export default connect(mapStateToProps, null)(Main);
