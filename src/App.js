@@ -7,6 +7,7 @@ import AllOrders from "./pages/AllOrders/AllOrders";
 import CreateOrder from "./pages/CreateOrder/CreateOrder";
 import OrderDetails from "./pages/OrderDetails/OrderDetails";
 import { getBlock } from "./store/actions/mainActions";
+import "./App.scss"
 
 function App(props) {
   React.useEffect(() => {

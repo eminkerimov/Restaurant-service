@@ -4,7 +4,7 @@ import axios from "axios";
 export function getBlock() {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3001/db.json`)
+      .get(`http://localhost:3000/db.json`)
       .then((response) => {
         const data = response.data;
         dispatch({
